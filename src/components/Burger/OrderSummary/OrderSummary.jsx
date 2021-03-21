@@ -7,8 +7,8 @@ function OrderSummary(props) {
     return Object.keys(props.ingredients).map((ingredient, index) => {
       return (
         <li key={ingredient + index}>
-          <span style={{ textTransform: "capitalize" }}>{ingredient}</span>:{" "}
-          {props.ingredients[ingredient]}
+          <span style={{ textTransform: "capitalize" }}>{ingredient}</span>:
+          {" " + props.ingredients[ingredient]}
         </li>
       );
     });

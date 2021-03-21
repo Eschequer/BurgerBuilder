@@ -1,0 +1,17 @@
+.NavigationItems {
+    background-color: inherit;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    
+}
+
+@media screen and (min-width: 500px){
+    .NavigationItems {
+      flex-direction: row;
+    }
+
+}
