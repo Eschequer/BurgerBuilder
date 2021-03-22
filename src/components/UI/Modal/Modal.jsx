@@ -8,7 +8,7 @@ const modal = document.querySelector("#modal-root");
 function Modal(props) {
   return ReactDom.createPortal(
     <React.Fragment>
-      <Backdrop show={props.show} cancel={props.cancelOrder} />
+      <Backdrop show={props.show} cancel={props.cancel} />
       <div
         className={styles.Modal}
         style={{
@@ -23,8 +23,14 @@ function Modal(props) {
   );
 }
 
+/*
 function showPropsAreEqual(prevProp, nextProp) {
-  return prevProp.show === nextProp.show;
+  console.log("children", prevProp.children === nextProp.children);
+  console.log("prop.show", prevProp.show === nextProp.show);
+  return (
+    prevProp.show === nextProp.show || prevProp.children === nextProp.children
+  );
 }
+*/
 
-export default React.memo(Modal, showPropsAreEqual);
+export default Modal;

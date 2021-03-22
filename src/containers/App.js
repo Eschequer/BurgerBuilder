@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
-
-import BurgerBuilder from "./BurgerBuilder";
+import BurgerBuilder from "./BurgerBuilder/BurgerBuilder";
 import Toolbar from "../components/Navigation/Toolbar/Toolbar";
 import SideDrawer from "../components/Navigation/SideDrawer/SideDrawer";
 
