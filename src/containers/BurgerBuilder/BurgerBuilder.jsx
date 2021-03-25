@@ -29,7 +29,14 @@ class BurgerBuilder extends React.Component {
     axios
       .get("/ingredients.json")
       .then(({ data }) => {
-        this.setState({ ingredients: data });
+        this.setState({
+          ingredients: {
+            salad: data.salad,
+            cheese: data.cheese,
+            bacon: data.bacon,
+            meat: data.meat,
+          },
+        });
       })
       .catch((error) => {
         this.setState({ error: true });
@@ -71,9 +78,7 @@ class BurgerBuilder extends React.Component {
   };
 
   updatePurchasableState(ingredients) {
-    const sum = Object.keys(ingredients)
-      .map((key) => ingredients[key])
-      .reduce((sum, el) => sum + el, 0);
+    const sum = Object.values(ingredients).reduce((sum, el) => sum + el, 0);
 
     this.setState({ purchasable: sum > 0 });
   }
@@ -97,9 +102,10 @@ class BurgerBuilder extends React.Component {
     axios
       .post("/orders.json", order)
       .then((response) => {
-        console.dir(response);
         this.setState({ loading: false });
         this.setState({ readyToOrder: false });
+        console.log(response.data);
+        this.props.history.push("/checkout");
       })
       .catch((error) => {
         this.setState({ loading: false });

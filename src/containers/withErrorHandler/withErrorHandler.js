@@ -8,17 +8,12 @@ export const withErrorHandler = (WrappedComponent, axios) => {
 
       this.state = {
         error: null,
+        mounted: false,
       };
     }
 
-    componentWillUnmount() {
-      axios.interceptors.request.eject(this.reqInterceptor);
-      axios.interceptors.response.eject(this.resInterceptor);
-    }
-
-    errorConfirmedHandler = () => this.setState({ error: null });
-
-    render() {
+    componentDidMount() {
+      this.setState({ mounted: true });
       this.reqInterceptor = axios.interceptors.request.use((request) => {
         this.setState({ error: null });
 
@@ -30,13 +25,22 @@ export const withErrorHandler = (WrappedComponent, axios) => {
 
         return Promise.reject(error);
       });
+    }
 
+    componentWillUnmount() {
+      axios.interceptors.request.eject(this.reqInterceptor);
+      axios.interceptors.response.eject(this.resInterceptor);
+    }
+
+    errorConfirmedHandler = () => this.setState({ error: null });
+
+    render() {
       return (
         <React.Fragment>
           <Modal show={this.state.error} cancel={this.errorConfirmedHandler}>
             {this.state.error?.message}
           </Modal>
-          <WrappedComponent {...this.props} />
+          {this.state.mounted ? <WrappedComponent {...this.props} /> : null}
         </React.Fragment>
       );
     }
