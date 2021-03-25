@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "../../axios-orders";
 import CheckoutSummary from "../../components/CheckoutSummary/CheckoutSummary";
 
 class Checkout extends Component {
@@ -12,18 +11,17 @@ class Checkout extends Component {
     },
   };
 
-  cancelCheckoutHandler = () => this.props.history.goBack();
-
   componentDidMount() {
-    if (this.props.orderName) {
-      axios
-        .get(`/orders/${this.props.orderName}.json`)
-        .then(({ data }) => {
-          this.setState({ ingredients: data.ingredients });
-        })
-        .catch((error) => console.log(error));
+    const searchParams = new URLSearchParams(this.props.location.search);
+
+    const ingredients = {};
+    for (let [param, val] of searchParams.entries()) {
+      ingredients[param] = +val;
     }
+    this.setState({ ingredients });
   }
+
+  cancelCheckoutHandler = () => this.props.history.goBack();
 
   render() {
     return (
@@ -31,6 +29,7 @@ class Checkout extends Component {
         <CheckoutSummary
           ingredients={this.state.ingredients}
           cancelCheckoutHandler={this.cancelCheckoutHandler}
+          num={this.state.num}
         />
       </div>
     );

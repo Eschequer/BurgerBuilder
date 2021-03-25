@@ -88,7 +88,7 @@ class BurgerBuilder extends React.Component {
   cancelOrderHandler = () => this.setState({ readyToOrder: false });
 
   continueOrderHandler = () => {
-    this.setState({ loading: true });
+    /*this.setState({ loading: true });
 
     const order = {
       ingredients: this.state.ingredients,
@@ -104,14 +104,32 @@ class BurgerBuilder extends React.Component {
       .then((response) => {
         this.setState({ loading: false });
         this.setState({ readyToOrder: false });
-        this.props.setOrder(response.data.name);
-        this.props.history.push("/checkout");
       })
       .catch((error) => {
         this.setState({ loading: false });
         this.setState({ readyToOrder: false });
         console.log(error);
-      });
+      });*/
+
+    const queryParams = [];
+
+    for (let ingredient in this.state.ingredients) {
+      if (
+        Object.prototype.hasOwnProperty.call(this.state.ingredients, ingredient)
+      )
+        queryParams.push(
+          encodeURIComponent(ingredient) +
+            "=" +
+            encodeURIComponent(this.state.ingredients[ingredient])
+        );
+    }
+
+    const queryString = queryParams.join("&");
+
+    this.props.history.push({
+      pathname: "/checkout",
+      search: "?" + queryString,
+    });
   };
 
   render() {

@@ -29,19 +29,8 @@ class App extends React.Component {
           open={this.state.showSideDrawer}
         />
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={(props) => (
-              <BurgerBuilder {...props} setOrder={this.setOrderHandler} />
-            )}
-          />
-          <Route
-            path="/checkout"
-            render={(props) => (
-              <Checkout {...props} orderName={this.state.orderName} />
-            )}
-          />
+          <Route exact path="/" component={BurgerBuilder} />
+          <Route path="/checkout" component={Checkout} />
         </Switch>
       </div>
     );
