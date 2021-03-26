@@ -14,12 +14,12 @@
 }
 
 .NavigationItem a:hover {
-  background-color: #d39952;
+  background-color: #8a4d2a;
 }
 
 .NavigationItem a:active,
 .NavigationItem a.active {
-  background-color: #d39952;
+  background-color: #8a4d2a;
 }
 
 @media (min-width: 500px) {
@@ -32,6 +32,7 @@
     padding: 6px 10px;
     display: flex;
     align-items: center;
+    border-bottom: 4px solid transparent;
   }
 
   .NavigationItem a:hover {

@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "../../axios-orders";
-import faker from "faker";
 import { withErrorHandler } from "../withErrorHandler/withErrorHandler";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/BuildControls/BuildControls";
@@ -123,6 +122,12 @@ class BurgerBuilder extends React.Component {
             encodeURIComponent(this.state.ingredients[ingredient])
         );
     }
+
+    queryParams.push(
+      encodeURIComponent("price") +
+        "=" +
+        encodeURIComponent(this.state.totalPrice)
+    );
 
     const queryString = queryParams.join("&");
 

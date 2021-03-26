@@ -9,11 +9,8 @@ function NavigationItems({ location }) {
       <NavigationItem link="/" active={location.pathname === "/"}>
         Burger Builder
       </NavigationItem>
-      <NavigationItem
-        link="/checkout"
-        active={location.pathname === "/checkout"}
-      >
-        Checkout
+      <NavigationItem link="/orders" active={location.pathname === "/orders"}>
+        Orders
       </NavigationItem>
     </ul>
   );

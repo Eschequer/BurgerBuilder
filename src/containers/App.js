@@ -5,6 +5,7 @@ import BurgerBuilder from "./BurgerBuilder/BurgerBuilder";
 import Toolbar from "../components/Navigation/Toolbar/Toolbar";
 import SideDrawer from "../components/Navigation/SideDrawer/SideDrawer";
 import Checkout from "./Checkout/Checkout";
+import Orders from "./Checkout/Orders/Orders";
 
 class App extends React.Component {
   state = { showSideDrawer: false, orderName: null };
@@ -30,6 +31,7 @@ class App extends React.Component {
         />
         <Switch>
           <Route exact path="/" component={BurgerBuilder} />
+          <Route path="/orders" component={Orders} />
           <Route path="/checkout" component={Checkout} />
         </Switch>
       </div>

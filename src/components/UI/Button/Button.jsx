@@ -6,6 +6,7 @@ function Button(props) {
     <button
       className={[styles.Button, styles[props.btnType]].join(" ")}
       onClick={props.clickHandler}
+      type={props.type}
     >
       {props.children}
     </button>
