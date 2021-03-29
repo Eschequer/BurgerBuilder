@@ -7,6 +7,7 @@ function Button(props) {
       className={[styles.Button, styles[props.btnType]].join(" ")}
       onClick={props.clickHandler}
       type={props.type}
+      disabled={props.disable}
     >
       {props.children}
     </button>

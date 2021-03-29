@@ -18,3 +18,25 @@ if (module.hot) {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function deepCloneObj(obj) {
+  const clonedObj = {};
+
+  for (let key in obj) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (obj.hasOwnProperty(key)) {
+      console.log(typeof obj[key], key);
+      if (typeof obj[key] === "object") {
+        if (Object.prototype.toString.call(obj[key]) === "[object Array]") {
+          clonedObj[key] = Object.values(deepCloneObj(obj[key]));
+          continue;
+        }
+        clonedObj[key] = deepCloneObj(obj[key]);
+        continue;
+      }
+
+      clonedObj[key] = obj[key];
+    }
+  }
+
+  return clonedObj;
+}

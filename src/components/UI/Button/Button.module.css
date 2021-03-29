@@ -11,6 +11,11 @@
     font-weight: bold;
 }
 
+.Button:disabled {
+    background-color: lightgray;
+    color: #d6bb22;
+}
+
 
 .Success {
     color: #5C9210;
@@ -19,3 +24,4 @@
 .Danger {
     color: #944317;
 }
+
