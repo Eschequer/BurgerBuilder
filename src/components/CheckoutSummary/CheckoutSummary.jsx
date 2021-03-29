@@ -4,7 +4,7 @@ import Burger from "../Burger/Burger";
 import Button from "../UI/Button/Button";
 
 function CheckoutSummary(props) {
-  return (
+  return props.ingredients ? (
     <div className={styles.CheckoutSummary}>
       <h1>We hope you will enjoy your Burger!</h1>
       <div style={{ margin: "auto", width: "100%" }}>
@@ -25,7 +25,7 @@ function CheckoutSummary(props) {
         CANCEL
       </Button>
     </div>
-  );
+  ) : null;
 }
 
 export default CheckoutSummary;

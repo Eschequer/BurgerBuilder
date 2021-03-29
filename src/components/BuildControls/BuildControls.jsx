@@ -15,8 +15,14 @@ function BuildControls(props) {
       <BuildControl
         label={control.label}
         key={control.label}
-        onAddIngredient={() => props.ingredientAdded(control.type)}
-        onRemoveIngredient={() => props.ingredientsRemoved(control.type)}
+        addIngredientAndPrice={() => {
+          props.ingredientAdded(control.type);
+          props.addToPrice(control.type);
+        }}
+        removeIngredientAndPrice={() => {
+          props.ingredientsRemoved(control.type);
+          props.subtractFromPrice(control.type);
+        }}
         disable={props.disabledInfo[control.type]}
       />
     ));

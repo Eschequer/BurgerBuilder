@@ -7,12 +7,12 @@ function BuildControl(props) {
       <div className={styles.Label}>{props.label}</div>
       <button
         className={styles.Less}
-        onClick={props.onRemoveIngredient}
+        onClick={props.removeIngredientAndPrice}
         disabled={props.disable}
       >
         Less
       </button>
-      <button className={styles.More} onClick={props.onAddIngredient}>
+      <button className={styles.More} onClick={props.addIngredientAndPrice}>
         More
       </button>
     </div>
