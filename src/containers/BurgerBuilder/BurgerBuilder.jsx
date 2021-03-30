@@ -6,72 +6,23 @@ import {
   removeIngredient,
   addToTotalPrice,
   subtractFromTotalPRice,
+  fetchIngredients,
+  initiatePurchase,
 } from "../../store/actions";
 import { withErrorHandler } from "../withErrorHandler/withErrorHandler";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
-import Spinner from "../../components/UI/Spinner/Spinner";
 
 class BurgerBuilder extends React.Component {
   state = {
     readyToOrder: false,
-    loading: false,
-    error: false,
   };
 
   componentDidMount() {
-    /*axios
-      .get("/ingredients.json")
-      .then(({ data }) => {
-        this.setState({
-          ingredients: {
-            salad: data.salad,
-            cheese: data.cheese,
-            bacon: data.bacon,
-            meat: data.meat,
-          },
-        });
-      })
-      .catch((error) => {
-        this.setState({ error: true });
-        console.log(error);
-      });*/
+    this.props.fetchIngredients();
   }
-
-  /* addIngredient = (type) => {
-    const updatedCount = this.state.ingredients[type] + 1;
-    const updatedIngredients = { ...this.state.ingredients };
-    updatedIngredients[type] = updatedCount;
-
-    const priceAddition = INGREDIENT_PRICES[type] + this.state.totalPrice;
-
-    this.setState({
-      ingredients: updatedIngredients,
-      totalPrice: +priceAddition.toFixed(2),
-    });
-
-    this.updatePurchasableState(updatedIngredients);
-  };
-
-  removeIngredient = (type) => {
-    if (this.state.ingredients[type] <= 0) return;
-
-    const updatedCount = this.state.ingredients[type] - 1;
-
-    const updatedIngredients = { ...this.state.ingredients };
-    updatedIngredients[type] = updatedCount;
-
-    const priceAddition = this.state.totalPrice - INGREDIENT_PRICES[type];
-
-    this.setState({
-      ingredients: updatedIngredients,
-      totalPrice: +priceAddition.toFixed(2),
-    });
-
-    this.updatePurchasableState(updatedIngredients);
-  };*/
 
   updatePurchasableState(ingredients) {
     const sum = Object.values(ingredients).reduce((sum, el) => sum + el, 0);
@@ -83,6 +34,7 @@ class BurgerBuilder extends React.Component {
   cancelOrderHandler = () => this.setState({ readyToOrder: false });
 
   continueOrderHandler = () => {
+    this.props.initiatePurchase();
     this.props.history.push("/checkout");
   };
 
@@ -92,20 +44,9 @@ class BurgerBuilder extends React.Component {
       disabledState[key] = disabledState[key] <= 0;
     }
 
-    const orderSummary = this.state.loading ? (
-      <Spinner />
-    ) : (
-      <OrderSummary
-        ingredients={this.props.ingredients}
-        cancelOrder={this.cancelOrderHandler}
-        continueOrder={this.continueOrderHandler}
-        totalPrice={this.props.totalPrice}
-      />
-    );
-
     return (
       <React.Fragment>
-        {this.props.ingredients ? (
+        {!this.props.error && this.props.ingredients ? (
           <>
             <Burger ingredients={this.props.ingredients} />
             <BuildControls
@@ -122,15 +63,18 @@ class BurgerBuilder extends React.Component {
               show={this.state.readyToOrder}
               cancel={this.cancelOrderHandler}
             >
-              {orderSummary}
+              <OrderSummary
+                ingredients={this.props.ingredients}
+                cancelOrder={this.cancelOrderHandler}
+                continueOrder={this.continueOrderHandler}
+                totalPrice={this.props.totalPrice}
+              />
             </Modal>
           </>
-        ) : this.state.error ? (
+        ) : (
           <p style={{ marginTop: "200px", textAlign: "center" }}>
             Ingredients cannot be loaded!
           </p>
-        ) : (
-          <Spinner />
         )}
       </React.Fragment>
     );
@@ -141,6 +85,7 @@ function mapStateToProps(state) {
   return {
     ingredients: state.ingredients,
     totalPrice: state.totalPrice,
+    error: state.error,
   };
 }
 
@@ -149,4 +94,6 @@ export default connect(mapStateToProps, {
   removeIngredient,
   addToTotalPrice,
   subtractFromTotalPRice,
+  fetchIngredients,
+  initiatePurchase,
 })(withErrorHandler(BurgerBuilder, axios));

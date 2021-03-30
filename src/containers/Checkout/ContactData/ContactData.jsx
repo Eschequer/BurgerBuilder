@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "../../../axios-orders";
 import styles from "./ContactData.module.css";
+import { purchaseBurger } from "../../../store/actions";
+import { withErrorHandler } from "../../withErrorHandler/withErrorHandler";
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
@@ -129,7 +131,6 @@ class ContactData extends Component {
 
   orderHandler = (event) => {
     event.preventDefault();
-    this.setState({ loading: true });
 
     const formData = {};
 
@@ -143,16 +144,7 @@ class ContactData extends Component {
       orderData: formData,
     };
 
-    axios
-      .post("/orders.json", order)
-      .then(() => {
-        this.setState({ loading: false });
-        this.props.history.push("/");
-      })
-      .catch((error) => {
-        this.setState({ loading: false });
-        console.log(error);
-      });
+    this.props.purchaseBurger(order);
   };
 
   inputChangeHandler = (event, inputIdentifier) => {
@@ -195,7 +187,7 @@ class ContactData extends Component {
 
     renderInputElements();
 
-    return !this.state.loading ? (
+    return !this.props.loading ? (
       <div className={styles.ContactData}>
         <h3>Enter your Contact Data</h3>
         <form action="/" onSubmit={this.orderHandler}>
@@ -219,7 +211,10 @@ function mapStateToProps(state) {
   return {
     ingredients: state.ingredients,
     price: state.totalPrice,
+    loading: state.orders.loading,
   };
 }
 
-export default connect(mapStateToProps)(ContactData);
+export default connect(mapStateToProps, { purchaseBurger })(
+  withErrorHandler(ContactData, axios)
+);

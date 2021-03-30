@@ -13,6 +13,8 @@ const ingredientsReducer = (state = 0, action) => {
       return +(state + INGREDIENT_PRICES[action.ingredientName]).toFixed(2);
     case actionTypes.SUBTRACT_FROM_TOTAL__PRICE:
       return +(state - INGREDIENT_PRICES[action.ingredientName]).toFixed(2);
+    case actionTypes.SET_INITIAL_TOTAL_PRICE:
+      return 0;
     default:
       return state;
   }

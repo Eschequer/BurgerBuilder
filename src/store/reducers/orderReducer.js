@@ -1,0 +1,57 @@
+import * as actionTypes from "../actions/actionTypes";
+
+const initialState = {
+  orders: [],
+  loading: false,
+  purchased: false,
+};
+
+const orderReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case actionTypes.PURCHASE_BURGER_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+        purchased: true,
+        orders: state.orders.concat({
+          ...action.orderData,
+          id: action.orderId,
+        }),
+      };
+    case actionTypes.PURCHASE_BURGER_FAILED:
+      return {
+        ...state,
+        loading: false,
+      };
+    case actionTypes.PURCHASE_INIT:
+      return {
+        ...state,
+        purchased: false,
+      };
+    case actionTypes.START_PURCHASING_BURGER:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.FETCH_ORDERS_INIT:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.FETCH_ORDERS_SUCCEEDED:
+      return {
+        ...state,
+        orders: action.orders,
+        loading: false,
+      };
+    case actionTypes.FETCH_ORDERS_FAILED:
+      return {
+        ...state,
+        loading: false,
+      };
+    default:
+      return state;
+  }
+};
+
+export default orderReducer;

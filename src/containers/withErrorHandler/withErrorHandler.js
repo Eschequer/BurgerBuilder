@@ -13,7 +13,6 @@ export const withErrorHandler = (WrappedComponent, axios) => {
     }
 
     componentDidMount() {
-      this.setState({ mounted: true });
       this.reqInterceptor = axios.interceptors.request.use((request) => {
         this.setState({ error: null });
 
@@ -25,6 +24,8 @@ export const withErrorHandler = (WrappedComponent, axios) => {
 
         return Promise.reject(error);
       });
+
+      this.setState({ mounted: true });
     }
 
     componentWillUnmount() {

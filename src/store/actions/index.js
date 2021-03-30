@@ -3,4 +3,7 @@ export {
   removeIngredient,
   subtractFromTotalPRice,
   addToTotalPrice,
-} from "./burgerBuilder";
+  fetchIngredients,
+} from "./burgerBuilderActions";
+
+export { purchaseBurger, initiatePurchase, fetchOrders } from "./orderActions";
