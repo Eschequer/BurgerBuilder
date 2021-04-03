@@ -118,7 +118,7 @@ class ContactData extends Component {
     }
 
     if (rules.minLength) {
-      isValid = value.trim().length >= 5 && isValid;
+      isValid = value.trim().length >= rules.minLength && isValid;
     }
 
     if (rules.validEmail) {

@@ -47,11 +47,11 @@ export const fetchOrdersFailed = (error) => {
   };
 };
 
-export const fetchOrders = () => {
+export const fetchOrders = (token) => {
   return async (dispatch) => {
     try {
       dispatch(startFetchingOrders());
-      const { data } = await axios.get("/orders.json");
+      const { data } = await axios.get("/orders.json?auth=" + token);
 
       const fetchedOrders = [];
 
@@ -69,10 +69,13 @@ export const fetchOrders = () => {
 };
 
 export const purchaseBurger = (orderData) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
       dispatch(startPurchasingBurger());
-      const { data } = await axios.post("/orders.json", orderData);
+      const { data } = await axios.post(
+        "/orders.json?auth=" + getState().auth.token,
+        orderData
+      );
 
       dispatch(purchaseBurgerSucceeded(data.name, orderData));
     } catch (error) {

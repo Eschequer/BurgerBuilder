@@ -34,13 +34,23 @@ function BuildControls(props) {
         Current Price: <strong>{props.price}</strong>
       </p>
       {renderControls()}
-      <button
-        className={styles.OrderButton}
-        disabled={!props.purchasable}
-        onClick={props.order}
-      >
-        Order Now
-      </button>
+      {!props.isAuthenticated ? (
+        <button
+          className={styles.OrderButton}
+          disabled={props.isAuthenticated}
+          onClick={props.order}
+        >
+          Sign in to Order
+        </button>
+      ) : (
+        <button
+          className={styles.OrderButton}
+          disabled={!props.purchasable}
+          onClick={props.order}
+        >
+          Order Now
+        </button>
+      )}
     </div>
   );
 }

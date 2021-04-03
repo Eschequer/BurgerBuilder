@@ -29,7 +29,13 @@ class BurgerBuilder extends React.Component {
     return sum > 0;
   }
 
-  readyToOrderHandler = () => this.setState({ readyToOrder: true });
+  readyToOrderHandler = () => {
+    if (!this.props.isAuthenticated) {
+      this.props.history.push("/auth");
+    } else {
+      this.setState({ readyToOrder: true });
+    }
+  };
 
   cancelOrderHandler = () => this.setState({ readyToOrder: false });
 
@@ -58,6 +64,7 @@ class BurgerBuilder extends React.Component {
               price={this.props.totalPrice}
               purchasable={this.updatePurchasableState(this.props.ingredients)}
               order={this.readyToOrderHandler}
+              isAuthenticated={this.props.isAuthenticated}
             />
             <Modal
               show={this.state.readyToOrder}
@@ -86,6 +93,7 @@ function mapStateToProps(state) {
     ingredients: state.ingredients,
     totalPrice: state.totalPrice,
     error: state.error,
+    isAuthenticated: state.auth.token !== null,
   };
 }
 
