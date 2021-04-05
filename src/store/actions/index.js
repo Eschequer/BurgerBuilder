@@ -1,8 +1,6 @@
 export {
   addIngredient,
   removeIngredient,
-  subtractFromTotalPRice,
-  addToTotalPrice,
   fetchIngredients,
 } from "./burgerBuilderActions";
 
@@ -13,4 +11,5 @@ export {
   authFailed,
   authSucceeded,
   authLogout,
+  checkAuthState,
 } from "./authActions";

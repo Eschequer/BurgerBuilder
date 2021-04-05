@@ -20,9 +20,6 @@ const authReducer = (state = initialState, action) => {
         ...state,
         token: action.authData["idToken"],
         userId: action.authData["localId"],
-        /*registered: action.authData.registered
-          ? action.authData.registered
-          : false,*/
         error: null,
         loading: false,
       };

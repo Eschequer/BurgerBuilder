@@ -3,6 +3,7 @@ import styles from "./Order.module.css";
 
 function Order(props) {
   function renderIngredients() {
+    if (!props.ingredients) return null;
     return Object.entries(props.ingredients).map((ingredient) => {
       return (
         <span key={ingredient[0]}>

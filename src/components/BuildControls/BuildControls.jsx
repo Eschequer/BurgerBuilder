@@ -17,11 +17,9 @@ function BuildControls(props) {
         key={control.label}
         addIngredientAndPrice={() => {
           props.ingredientAdded(control.type);
-          props.addToPrice(control.type);
         }}
         removeIngredientAndPrice={() => {
           props.ingredientsRemoved(control.type);
-          props.subtractFromPrice(control.type);
         }}
         disable={props.disabledInfo[control.type]}
       />

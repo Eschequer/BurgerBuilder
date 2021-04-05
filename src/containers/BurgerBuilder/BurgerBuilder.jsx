@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 import {
   addIngredient,
   removeIngredient,
-  addToTotalPrice,
-  subtractFromTotalPRice,
   fetchIngredients,
   initiatePurchase,
 } from "../../store/actions";
@@ -58,8 +56,6 @@ class BurgerBuilder extends React.Component {
             <BuildControls
               ingredientAdded={this.props.addIngredient}
               ingredientsRemoved={this.props.removeIngredient}
-              addToPrice={this.props.addToTotalPrice}
-              subtractFromPrice={this.props.subtractFromTotalPRice}
               disabledInfo={disabledState}
               price={this.props.totalPrice}
               purchasable={this.updatePurchasableState(this.props.ingredients)}
@@ -90,9 +86,9 @@ class BurgerBuilder extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice,
-    error: state.error,
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice,
+    error: state.burgerBuilder.error,
     isAuthenticated: state.auth.token !== null,
   };
 }
@@ -100,8 +96,6 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {
   addIngredient,
   removeIngredient,
-  addToTotalPrice,
-  subtractFromTotalPRice,
   fetchIngredients,
   initiatePurchase,
 })(withErrorHandler(BurgerBuilder, axios));

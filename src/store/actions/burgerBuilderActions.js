@@ -15,26 +15,6 @@ export const removeIngredient = (ingredientName) => {
   };
 };
 
-export const addToTotalPrice = (ingredientName) => {
-  return {
-    type: actionTypes.ADD_TO_TOTAL_PRICE,
-    ingredientName,
-  };
-};
-
-export const subtractFromTotalPRice = (ingredientName) => {
-  return {
-    type: actionTypes.SUBTRACT_FROM_TOTAL__PRICE,
-    ingredientName,
-  };
-};
-
-export const setInitialTotalPRice = () => {
-  return {
-    type: actionTypes.SET_INITIAL_TOTAL_PRICE,
-  };
-};
-
 export const setIngredients = (ingredients) => {
   return {
     type: actionTypes.SET_INGREDIENTS,
@@ -62,7 +42,6 @@ export const fetchIngredients = () => {
       .get("/ingredients.json")
       .then(({ data }) => {
         dispatch(setIngredients(data));
-        dispatch(setInitialTotalPRice());
         dispatch(fetchIngredientsSucceeded());
       })
       .catch((error) => {

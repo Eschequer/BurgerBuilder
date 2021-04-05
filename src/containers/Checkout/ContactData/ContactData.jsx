@@ -142,6 +142,7 @@ class ContactData extends Component {
       ingredients: this.props.ingredients,
       price: this.props.price,
       orderData: formData,
+      userId: this.props.userId,
     };
 
     this.props.purchaseBurger(order);
@@ -161,7 +162,6 @@ class ContactData extends Component {
     let formIsValid = true;
 
     for (let updatedFormElement in updatedOrderForm) {
-      console.log(updatedFormElement);
       formIsValid = updatedOrderForm[updatedFormElement].valid && formIsValid;
     }
 
@@ -209,9 +209,10 @@ class ContactData extends Component {
 
 function mapStateToProps(state) {
   return {
-    ingredients: state.ingredients,
-    price: state.totalPrice,
+    ingredients: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.totalPrice,
     loading: state.orders.loading,
+    userId: state.auth.userId,
   };
 }
 

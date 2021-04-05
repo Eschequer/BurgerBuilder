@@ -1,5 +1,7 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { connect } from "react-redux";
+import { checkAuthState } from "../store/actions";
 import "./App.css";
 import BurgerBuilder from "./BurgerBuilder/BurgerBuilder";
 import Toolbar from "../components/Navigation/Toolbar/Toolbar";
@@ -10,9 +12,11 @@ import Auth from "./Auth/Auth";
 import Logout from "../components/Logout/Logout";
 
 class App extends React.Component {
-  state = { showSideDrawer: false, orderName: null };
+  state = { showSideDrawer: false };
 
-  setOrderHandler = (orderName) => this.setState({ orderName });
+  componentDidMount() {
+    this.props.checkAuthState();
+  }
 
   closeSideDrawerHandler = () => {
     this.setState({ showSideDrawer: false });
@@ -24,6 +28,29 @@ class App extends React.Component {
     });
 
   render() {
+    const renderRoutes = () => {
+      if (this.props.isAuthenticated) {
+        return (
+          <Switch>
+            <Route exact path="/" component={BurgerBuilder} />
+            <Route path="/orders" component={Orders} />
+            <Route path="/checkout" component={Checkout} />
+            <Route path="/logout" component={Logout} />
+            <Route path="/auth" component={Auth} />
+            <Redirect to="/" />
+          </Switch>
+        );
+      }
+
+      return (
+        <Switch>
+          <Route exact path="/" component={BurgerBuilder} />
+          <Route path="/auth" component={Auth} />
+          <Redirect to="/" />
+        </Switch>
+      );
+    };
+
     return (
       <div className="App">
         <Toolbar toggleSidebar={this.toggleSideDrawerHandler} />
@@ -31,16 +58,16 @@ class App extends React.Component {
           close={this.closeSideDrawerHandler}
           open={this.state.showSideDrawer}
         />
-        <Switch>
-          <Route exact path="/" component={BurgerBuilder} />
-          <Route path="/orders" component={Orders} />
-          <Route path="/checkout" component={Checkout} />
-          <Route path="/auth" component={Auth} />
-          <Route path="/logout" component={Logout} />
-        </Switch>
+        {renderRoutes()}
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: state.auth.token !== null,
+  };
+}
+
+export default connect(mapStateToProps, { checkAuthState })(App);
