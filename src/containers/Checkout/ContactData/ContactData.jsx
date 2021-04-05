@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "../../../axios-orders";
+import { checkValidity } from "../../utility";
 import styles from "./ContactData.module.css";
 import { purchaseBurger } from "../../../store/actions";
 import { withErrorHandler } from "../../withErrorHandler/withErrorHandler";
@@ -110,25 +111,6 @@ class ContactData extends Component {
     loading: false,
   };
 
-  checkValidity(value, rules) {
-    let isValid = true;
-
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-
-    if (rules.minLength) {
-      isValid = value.trim().length >= rules.minLength && isValid;
-    }
-
-    if (rules.validEmail) {
-      let regExp = /@\w+\.\w+/g;
-      isValid = regExp.test(value) && isValid;
-    }
-
-    return isValid;
-  }
-
   orderHandler = (event) => {
     event.preventDefault();
 
@@ -153,7 +135,7 @@ class ContactData extends Component {
     const updatedFormElement = { ...updatedOrderForm[inputIdentifier] };
     updatedFormElement.value = event.target.value;
     updatedFormElement.touched = true;
-    updatedFormElement.valid = this.checkValidity(
+    updatedFormElement.valid = checkValidity(
       updatedFormElement.value,
       updatedFormElement.validation
     );

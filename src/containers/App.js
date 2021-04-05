@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { checkAuthState } from "../store/actions";
@@ -6,10 +6,34 @@ import "./App.css";
 import BurgerBuilder from "./BurgerBuilder/BurgerBuilder";
 import Toolbar from "../components/Navigation/Toolbar/Toolbar";
 import SideDrawer from "../components/Navigation/SideDrawer/SideDrawer";
-import Checkout from "./Checkout/Checkout";
-import Orders from "./Checkout/Orders/Orders";
-import Auth from "./Auth/Auth";
-import Logout from "../components/Logout/Logout";
+const Checkout = lazy(() =>
+  import("./Checkout/Checkout").then((module) => {
+    return {
+      default: module.default,
+    };
+  })
+);
+const Orders = lazy(() =>
+  import("./Checkout/Orders/Orders").then((module) => {
+    return {
+      default: module.default,
+    };
+  })
+);
+const Auth = lazy(() =>
+  import("./Auth/Auth").then((module) => {
+    return {
+      default: module.default,
+    };
+  })
+);
+const Logout = lazy(() =>
+  import("../components/Logout/Logout").then((module) => {
+    return {
+      default: module.default,
+    };
+  })
+);
 
 class App extends React.Component {
   state = { showSideDrawer: false };
@@ -31,23 +55,27 @@ class App extends React.Component {
     const renderRoutes = () => {
       if (this.props.isAuthenticated) {
         return (
-          <Switch>
-            <Route exact path="/" component={BurgerBuilder} />
-            <Route path="/orders" component={Orders} />
-            <Route path="/checkout" component={Checkout} />
-            <Route path="/logout" component={Logout} />
-            <Route path="/auth" component={Auth} />
-            <Redirect to="/" />
-          </Switch>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Switch>
+              <Route exact path="/" component={BurgerBuilder} />
+              <Route path="/orders" component={Orders} />
+              <Route path="/checkout" component={Checkout} />
+              <Route path="/logout" component={Logout} />
+              <Route path="/auth" component={Auth} />
+              <Redirect to="/" />
+            </Switch>
+          </Suspense>
         );
       }
 
       return (
-        <Switch>
-          <Route exact path="/" component={BurgerBuilder} />
-          <Route path="/auth" component={Auth} />
-          <Redirect to="/" />
-        </Switch>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Switch>
+            <Route exact path="/" component={BurgerBuilder} />
+            <Route path="/auth" component={Auth} />
+            <Redirect to="/" />
+          </Switch>
+        </Suspense>
       );
     };
 

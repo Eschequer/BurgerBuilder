@@ -9,6 +9,7 @@ function SideDrawer(props) {
     <React.Fragment>
       <Backdrop show={props.open} cancel={props.close} />
       <div
+        onClick={props.close}
         className={
           styles.SideDrawer + ` ${props.open ? styles.open : styles.close}`
         }
