@@ -81,10 +81,14 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <Toolbar toggleSidebar={this.toggleSideDrawerHandler} />
+        <Toolbar
+          toggleSidebar={this.toggleSideDrawerHandler}
+          isAuthenticated={this.props.isAuthenticated}
+        />
         <SideDrawer
           close={this.closeSideDrawerHandler}
           open={this.state.showSideDrawer}
+          isAuthenticated={this.props.isAuthenticated}
         />
         {renderRoutes()}
       </div>

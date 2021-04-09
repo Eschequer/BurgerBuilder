@@ -10,7 +10,7 @@ function Toolbar(props) {
       <SidebarToggle toggleSidebar={props.toggleSidebar} />
       <Logo height="80%" />
       <nav className={styles.desktopOnly}>
-        <NavigationItems />
+        <NavigationItems isAuthenticated={props.isAuthenticated} />
       </nav>
     </header>
   );

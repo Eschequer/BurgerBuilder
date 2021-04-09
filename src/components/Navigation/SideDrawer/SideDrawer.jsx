@@ -16,7 +16,7 @@ function SideDrawer(props) {
       >
         <Logo height="7%" />
         <nav>
-          <NavigationItems />
+          <NavigationItems isAuthenticated={props.isAuthenticated} />
         </nav>
       </div>
     </React.Fragment>

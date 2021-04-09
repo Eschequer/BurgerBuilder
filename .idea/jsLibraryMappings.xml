@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <includedPredefinedLibrary name="HTTP Response Handler" />
-    <includedPredefinedLibrary name="Node.js Core" />
+    <file url="file://$PROJECT_DIR$" libraries="{my-react-project1/node_modules}" />
+    <file url="file://$PROJECT_DIR$/src/components/Navigation/NavigationItems/NavigationItems.test.js" libraries="{my-react-project1/node_modules}" />
+    <excludedPredefinedLibrary name="HTML" />
   </component>
 </project>
